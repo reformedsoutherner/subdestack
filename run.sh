@@ -29,13 +29,15 @@ echo "  Substack Archiver — Running"
 echo "======================================"
 echo ""
 
-# Run with --dry-run first if passed as argument
-if [ "$1" = "--dry-run" ]; then
+# Pass any extra flags straight through, e.g.:
+#   ./run.sh --dry-run
+#   ./run.sh --skip-saved
+#   ./run.sh --dry-run --skip-saved
+if [[ "$*" == *"--dry-run"* ]]; then
     echo "DRY RUN — no items will actually be archived."
     echo ""
-    .venv/bin/python archive_inbox.py --cookies cookies.json --headless --dry-run
-else
-    .venv/bin/python archive_inbox.py --cookies cookies.json --headless
 fi
+
+.venv/bin/python archive_inbox.py --cookies cookies.json --headless "$@"
 
 echo ""
