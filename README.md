@@ -6,92 +6,132 @@ Archives all unread newsletters in your Substack inbox in one go — no more swi
 
 ## What you'll need
 
-- A Mac (macOS 12 or newer)
+- A Mac running macOS 12 (Monterey) or newer
 - Google Chrome installed
-- Python 3.10 or newer — check by opening Terminal and typing `python3 --version`
-  - If you don't have it, download from [python.org/downloads](https://www.python.org/downloads/) and install it, then come back here.
+- Python 3.10 or newer (see Step 1)
 
 ---
 
-## Step 1 — Download this project
+## Step 1 — Check (or install) Python
 
-If you received this as a zip file, unzip it and note where the folder is (e.g. your Desktop or Downloads folder).
+1. Open **Terminal**. You can find it by pressing **Cmd + Space**, typing `Terminal`, and pressing Enter.
 
-If you cloned it with git, it's already on your machine.
+2. Type this and press Enter:
+   ```
+   python3 --version
+   ```
+
+3. You should see something like `Python 3.12.0`. Any version `3.10` or higher is fine.
+
+   - If you see `command not found` or a version lower than `3.10`, download the latest installer from **[python.org/downloads](https://www.python.org/downloads/)**, run it, then come back here.
 
 ---
 
-## Step 2 — Open Terminal in the project folder
+## Step 2 — Get the project files onto your Mac
 
-1. Open **Finder** and navigate to the project folder (`subdestack`).
-2. Right-click (or Control-click) the folder and choose **"New Terminal at Folder"**.
-   - If you don't see that option, open Terminal from Applications → Utilities → Terminal, then type `cd ` (with a space after it), drag the folder onto the Terminal window, and press Enter.
+**Option A — Download as a zip (simplest):**
+1. On the GitHub page for this project, click the green **Code** button.
+2. Click **Download ZIP**.
+3. Open your Downloads folder and double-click the zip to unzip it.
+4. Move the resulting folder somewhere easy to find, like your Desktop.
 
-You should see a prompt that ends with the folder name, something like:
+**Option B — If you have git installed:**
 ```
-yourname@Mac subdestack %
+git clone <repo-url>
 ```
+Replace `<repo-url>` with the URL of this repository.
 
 ---
 
-## Step 3 — Run the setup script (once only)
+## Step 3 — Open Terminal inside the project folder
 
-In Terminal, type exactly this and press Enter:
+1. Open **Finder** and navigate to the `subdestack` folder.
+2. Right-click (or two-finger click) the folder and choose **"New Terminal at Folder"**.
+
+   > If you don't see that option: open Terminal, type `cd ` (with a space after it), then drag the `subdestack` folder onto the Terminal window and press Enter.
+
+3. Your Terminal prompt should now end with `subdestack`, like:
+   ```
+   yourname@Mac subdestack %
+   ```
+
+---
+
+## Step 4 — Run the setup script (one time only)
+
+Type this exactly and press Enter:
 
 ```
 ./setup.sh
 ```
 
-This will:
-- Create a sandboxed Python environment
-- Install the required packages
-- Download a copy of the Chromium browser (~150 MB, one-time only)
+If you get `Permission denied`, run this first and then try again:
+```
+chmod +x setup.sh run.sh
+```
 
-When it finishes you'll see **"Setup complete!"**
+The setup script will:
+- Create a sandboxed Python environment (nothing installed globally on your Mac)
+- Install the required Python package
+- Download a copy of Chromium (~150 MB — this is the browser the script controls)
+
+When it finishes you will see:
+```
+Setup complete!
+```
 
 ---
 
-## Step 4 — Export your Substack cookies
+## Step 5 — Export your Substack cookies
 
-The script needs to log in to Substack as you. The easiest way is to give it a copy of your browser's login cookie.
+The script needs proof that you're logged in to Substack. You do this by exporting a "cookie" file from Chrome — think of it as a temporary login pass.
 
-1. Open **Google Chrome** and go to [substack.com](https://substack.com). Make sure you are logged in.
+1. Open **Google Chrome** and go to **[substack.com](https://substack.com)**. Make sure you're logged in.
 
 2. Install the **Cookie-Editor** extension:
-   - Go to [chromewebstore.google.com](https://chromewebstore.google.com) and search for **Cookie-Editor** (by cgagnier).
-   - Click **Add to Chrome**.
+   - Go to **[chrome.google.com/webstore](https://chrome.google.com/webstore)** and search for **Cookie-Editor** (published by cgagnier).
+   - Click **Add to Chrome → Add extension**.
 
-3. Once installed, click the Cookie-Editor icon in your browser toolbar (top right — it looks like a cookie 🍪).
+3. While still on **substack.com**, click the Cookie-Editor icon in the Chrome toolbar (puzzle-piece icon top-right → Cookie-Editor).
 
-4. Click **Export**, then **Export as JSON**.
+4. In the Cookie-Editor panel, click **Export** at the bottom, then **Export as JSON**.
+   The JSON data is now copied to your clipboard.
 
-5. A JSON file will be copied to your clipboard. Open a plain text editor (TextEdit works — but make sure it's in plain text mode: Format → Make Plain Text), paste the contents, and save the file as **`cookies.json`** inside the `subdestack` folder.
+5. Save it as a file called `cookies.json` in the `subdestack` folder:
+   - Open **TextEdit** (press Cmd + Space, type TextEdit, press Enter).
+   - If TextEdit opens in rich-text mode, click **Format → Make Plain Text**.
+   - Press **Cmd + V** to paste.
+   - Press **Cmd + S** to save. In the save dialog:
+     - Set the filename to `cookies.json`
+     - Navigate to the `subdestack` folder
+     - Make sure **"If no extension is provided, use .txt"** is **unchecked**
+   - Click **Save**.
 
-> **Keep this file private.** It acts like a password. Don't share it or upload it anywhere.
+> **Keep `cookies.json` private.** It acts like a password to your Substack account. Never share it or upload it anywhere.
 
 ---
 
-## Step 5 — Preview first (optional but recommended)
+## Step 6 — Test with a dry run (recommended)
 
-Before archiving anything, do a dry run to see what the script would archive:
+Before archiving anything, do a preview to see what the script would touch:
 
 ```
 ./run.sh --dry-run
 ```
 
-This opens a browser, checks your inbox, and lists the items — without actually archiving them.
+It will list the newsletter items it found — without actually archiving them. Check the list looks right.
 
 ---
 
-## Step 6 — Archive your inbox
+## Step 7 — Archive your inbox
 
-When you're happy, run:
+When you're ready, run:
 
 ```
 ./run.sh
 ```
 
-The script will run invisibly in the background (no browser window) and archive all your unread inbox items. You'll see a count at the end, e.g.:
+The script runs a hidden browser in the background, scrolls through your entire inbox, and archives everything. You'll see progress as it runs, and a final count:
 
 ```
 Archived 47 item(s).
@@ -99,11 +139,22 @@ Archived 47 item(s).
 
 ---
 
+## Options
+
+| Command | What it does |
+|---------|-------------|
+| `./run.sh` | Archive everything in your inbox |
+| `./run.sh --dry-run` | Preview only — no changes made |
+| `./run.sh --skip-saved` | Archive everything *except* items you've bookmarked |
+| `./run.sh --dry-run --skip-saved` | Preview the skip-saved behaviour |
+
+---
+
 ## Running it again in future
 
-Your cookies are refreshed automatically each run, so they stay valid. Just run `./run.sh` whenever your inbox fills up again.
+Just open Terminal in the `subdestack` folder and run `./run.sh` again. Your cookies are refreshed automatically each run, so they should stay valid for months.
 
-If you ever get a **"Not logged in"** error, your session has expired. Go back to Step 4 and re-export fresh cookies.
+If you ever see a **"Not logged in"** error, your session has expired — go back to Step 5 and re-export fresh cookies.
 
 ---
 
@@ -113,15 +164,15 @@ If you ever get a **"Not logged in"** error, your session has expired. Go back t
 |---------|-----|
 | `command not found: python3` | Install Python from [python.org/downloads](https://www.python.org/downloads/) |
 | `./setup.sh: Permission denied` | Run `chmod +x setup.sh run.sh` first |
-| `cookies.json not found` | Re-read Step 4 — make sure the file is in the `subdestack` folder |
-| `Not logged in after loading cookies` | Re-export cookies from Chrome (Step 4) |
-| `No unread items found` | Your inbox is already clear — nothing to do! |
-| Script seems stuck | Let it run — a very large inbox can take a few minutes |
+| `cookies.json not found` | Make sure you saved it *inside* the `subdestack` folder (Step 5) |
+| `cookies.json` contains plain text, not JSON | You saved it as `.txt` — re-save it without the `.txt` extension |
+| `Not logged in after loading cookies` | Re-export cookies from Chrome while on substack.com (Step 5) |
+| `No inbox items found` | Your inbox is already empty — nothing to do! |
+| Script seems stuck or slow | A large inbox takes a few minutes — let it run |
 
 ---
 
 ## Security notes
 
-- `cookies.json` contains your Substack session — treat it like a password.
-- It's listed in `.gitignore` so it won't be accidentally committed if you use git.
-- The script only ever reads your inbox and archives items — it never posts, subscribes, or changes your account settings.
+- `cookies.json` is listed in `.gitignore`, so it won't be accidentally uploaded if you use git.
+- The script only archives items in your inbox — it never posts, subscribes, unsubscribes, or changes account settings.
