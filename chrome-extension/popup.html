@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Substack Note Scheduler</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="header">
+    <div class="header-icon">&#128337;</div>
+    <div class="header-title">Note Scheduler</div>
+  </div>
+
+  <div id="empty-state" class="empty-state" hidden>
+    <div class="empty-icon">&#128221;</div>
+    <div class="empty-text">No scheduled notes yet.</div>
+    <div class="empty-sub">
+      Visit <a href="https://substack.com/notes" target="_blank">substack.com/notes</a>
+      and use the <strong>Schedule</strong> button when writing a note.
+    </div>
+  </div>
+
+  <div id="notes-list" class="notes-list" hidden></div>
+
+  <div class="footer">
+    <button id="clear-sent-btn" class="clear-btn" title="Remove all sent notes from this list">
+      Clear sent
+    </button>
+    <span id="status-text" class="status-text"></span>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

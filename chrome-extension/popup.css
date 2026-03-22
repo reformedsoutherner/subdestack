@@ -1,0 +1,211 @@
+/* ============================================================
+   Substack Note Scheduler - Popup Styles
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 360px;
+  min-height: 100px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  color: #1a1a1a;
+  background: #fff;
+}
+
+/* Header */
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.header-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.header-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* Empty state */
+
+.empty-state {
+  padding: 28px 20px 24px;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.empty-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.empty-sub {
+  font-size: 13px;
+  color: #777;
+  line-height: 1.6;
+}
+
+.empty-sub a {
+  color: #ff6719;
+  text-decoration: none;
+}
+
+.empty-sub a:hover {
+  text-decoration: underline;
+}
+
+/* Notes list */
+
+.notes-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Individual note card */
+
+.note-card {
+  padding: 12px 14px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.note-card:last-child {
+  border-bottom: none;
+}
+
+.note-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.note-text {
+  font-size: 13px;
+  color: #333;
+  line-height: 1.5;
+  flex: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.note-delete-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: #bbb;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 4px;
+  margin-top: -2px;
+}
+
+.note-delete-btn:hover {
+  color: #c0392b;
+  background: #fdecea;
+}
+
+.note-card-bottom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.note-time {
+  font-size: 12px;
+  color: #888;
+}
+
+/* Status badge */
+
+.note-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.02em;
+}
+
+.status-pending {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.status-sent {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-failed {
+  background: #fdecea;
+  color: #c0392b;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-pending .status-dot  { background: #e65100; }
+.status-sent .status-dot     { background: #2e7d32; }
+.status-failed .status-dot   { background: #c0392b; }
+
+/* Footer */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-top: 1px solid #eee;
+}
+
+.clear-btn {
+  background: none;
+  border: 1px solid #ddd;
+  color: #666;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.clear-btn:hover {
+  background: #f5f5f5;
+  border-color: #bbb;
+}
+
+.status-text {
+  font-size: 12px;
+  color: #aaa;
+}
